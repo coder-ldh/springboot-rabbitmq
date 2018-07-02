@@ -1,0 +1,15 @@
+#serverÅäÖÃ
+server:
+  #Éè¶¨¼àÌı¶Ë¿Ú
+  port: 8080
+  servlet:
+    path: /
+
+
+bin:
+  path: /app/
+  name: inter.sh
+
+spring:
+  context:
+    component-scan: com.ldh
