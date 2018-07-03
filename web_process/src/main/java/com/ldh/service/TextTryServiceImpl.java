@@ -35,8 +35,6 @@ public class TextTryServiceImpl implements  TestTryService {
                 TextTry value = cmp.get(key);
                 log.info("Key = " + key + ", Value = " + value.toString());
             }
-
-
             TextTry ty = cmp.get(textTryId);
             log.info("[ty]——>" + ty);
             if (ty == null){

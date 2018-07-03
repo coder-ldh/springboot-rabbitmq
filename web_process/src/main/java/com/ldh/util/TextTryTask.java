@@ -31,15 +31,16 @@ public class TextTryTask implements Callable<String> {
         BufferedWriter bw = textTry.getBufferedWriter();
         BufferedReader br = textTry.getBufferedReader();
         try {
-            log.info("[request]——>[" + sayWord+ "]");
             bw.write(sayWord + "\n");
+            log.info("[request]——>[" + sayWord + "\n"+ "]");
             bw.flush();
-            /*String str = null;
-                log.info("[br.ready()]——>[" + br.ready()+ "]");
-                log.info("[str = br.readLine()]——>[" + ((str = br.readLine())!= null)+ "]");
-            while (br.ready() && (str = br.readLine())!= null ){*/
+//            String str = null;
+//            int b;
+//            while (br.ready()  && (b=br.read())!=-1){
+//                log.info("[br.ready()]——>[" + br.ready()+ "]");
+//                log.info("[str = br.readLine()]——>[" + ((str = br.readLine())!= null)+ "]");
              response += br.readLine();
-            //}
+//            }
             log.info("[response]——>[" + response+ "]");
         }catch (Exception e){
             throw e;

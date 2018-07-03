@@ -26,56 +26,49 @@ public class TextTry {
 
     public TextTry setup() throws Exception{
 
+        //String[] cmd = { "cmd"};
         String[] cmd = { "/bin/sh", "-c",  this.SHELLPATH +  this.BINNAME};
         log.info("[cmd]——>" + "/bin/sh"+ " " + "-c"+ " " +  SHELLPATH + BINNAME);
         Process pid;
+        BufferedReader  bufferedReader =null;
+        BufferedWriter bufferedWriter=null;
         try {
             pid = Runtime.getRuntime().exec(cmd);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        TextTry textTry = new TextTry();
-        textTry.pid=pid;
-        return textTry;
-    }
-
-    public boolean isAlive(){
-        return pid.isAlive();
-    }
-
-
-
-    public Boolean isRead(){
-        return pid.getInputStream()!=null;
-    }
-
-    public Boolean isWriter(){
-        return pid.getOutputStream()!=null;
-    }
-
-
-    public BufferedReader getBufferedReader() {
-        if (bufferedReader == null){
             try {
-                 bufferedReader = new BufferedReader(new InputStreamReader(pid.getInputStream(),"GBK"), 1024);
+                  bufferedReader = new BufferedReader(new InputStreamReader(pid.getInputStream(),"GBK"), 1024);
             }catch (Exception e){
-                bufferedReader = new BufferedReader(new InputStreamReader(pid.getInputStream()), 1024);
+                 bufferedReader = new BufferedReader(new InputStreamReader(pid.getInputStream()), 1024);
                 e.printStackTrace();
             }
-        }
-        return bufferedReader;
-    }
 
-    public BufferedWriter getBufferedWriter() {
-        if ( bufferedWriter == null){
             try {
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(pid.getOutputStream(),"GBK"),1024);
             }catch (Exception e) {
                 bufferedWriter = new BufferedWriter(new OutputStreamWriter(pid.getOutputStream()),1024);
                 e.printStackTrace();
             }
+            this.bufferedReader = bufferedReader;
+            this.bufferedWriter = bufferedWriter;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
+        TextTry textTry = new TextTry();
+        textTry.pid=pid;
+        textTry.bufferedReader= bufferedReader;
+        textTry.bufferedWriter = bufferedWriter;
+        return textTry;
+    }
+
+    public boolean isAlive(){
+        return pid.isAlive() || pid.getInputStream()!=null || pid.getOutputStream()!=null;
+    }
+
+    public BufferedReader getBufferedReader() {
+        return bufferedReader;
+    }
+
+    public BufferedWriter getBufferedWriter() {
         return bufferedWriter;
     }
 
