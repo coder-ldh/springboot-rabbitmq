@@ -27,13 +27,14 @@ public class TextTry {
         try {
             pid = Runtime.getRuntime().exec(cmd);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }
 
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(pid.getInputStream(),"GBK"), 1024*1024);
-        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(pid.getOutputStream()),1024*1024);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(pid.getInputStream(),"GBK"), 1024);
+
+        OutputStream outputStream = pid.getOutputStream();
+        BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream),1024);
 
         TextTry textTry = new TextTry();
         textTry.pid=pid;
@@ -43,8 +44,17 @@ public class TextTry {
     }
 
     public boolean isAlive(){
-        return pid.isAlive() || pid.getInputStream()!=null || pid.getOutputStream()!=null;
+        return pid.isAlive();
     }
+
+    public Boolean isRead(){
+        return pid.getInputStream()!=null;
+    }
+
+    public Boolean isWriter(){
+        return pid.getOutputStream()!=null;
+    }
+
 
     public BufferedReader getBufferedReader() {
         return bufferedReader;

@@ -1,5 +1,6 @@
 package com.ldh.service;
 
+import com.ldh.constant.TextTryConstant;
 import com.ldh.entity.TextTry;
 import com.ldh.config.TextTryThreadConfig;
 import com.ldh.util.TextTryTask;
@@ -22,8 +23,6 @@ public class TextTryServiceImpl implements  TestTryService {
     @Autowired
     private TextTryThreadConfig textTryThreadConfig;
 
-    private ConcurrentHashMap<String, TextTry> textTrys = new ConcurrentHashMap<>();
-
     @Autowired
     private TextTry textTry;
 
@@ -31,10 +30,14 @@ public class TextTryServiceImpl implements  TestTryService {
     public String interacts(String textTryId, String sayWord) throws Exception{
         try {
             log.info("[sayWord]——>" + sayWord + "[textTryId]——>" + textTryId);
-            TextTry textTryByTextTryId = textTrys.get(sayWord);
-            if (textTryByTextTryId == null || textTry.isAlive()){
+            TextTry textTryByTextTryId = TextTryConstant.getTEXTTRYS().get(sayWord);
+            if (textTryByTextTryId == null ){
                 textTryByTextTryId = textTry.setup();
-                textTrys.put(textTryId,textTryByTextTryId);
+                TextTryConstant.getTEXTTRYS().put(textTryId,textTryByTextTryId);
+            }if (textTryByTextTryId.isRead()){
+
+            }if (textTryByTextTryId.isWriter()){
+
             }
             FutureTask<String> futureTask = new FutureTask<String>(new TextTryTask(textTryByTextTryId,sayWord));
             textTryThreadConfig.getTrialThreadExecutor().execute(futureTask);

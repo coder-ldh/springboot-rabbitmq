@@ -34,16 +34,18 @@ public class TextTryTask implements Callable<String> {
             log.info("saying...");
             bufferedWriter.write(sayWord + "\n");
             bufferedWriter.flush();
-           bufferedWriter.close();
+            bufferedWriter.close();
             log.info("answer...");
-            String str;
+
+            String str = null;
             while((str = br.readLine()) != null){
-                response = response + br.readLine();
+                str = br.readLine();
+                response =response + str;
             }
             log.info("end**************************");
+        return response;
         }catch (Exception e){
             throw e;
         }
-        return response;
     }
 }
