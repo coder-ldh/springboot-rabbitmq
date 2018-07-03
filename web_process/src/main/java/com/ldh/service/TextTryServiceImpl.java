@@ -30,19 +30,27 @@ public class TextTryServiceImpl implements  TestTryService {
     public String interacts(String textTryId, String sayWord) throws Exception{
         try {
             log.info("[sayWord]——>" + sayWord + "[textTryId]——>" + textTryId);
-            TextTry textTryByTextTryId = TextTryConstant.getTEXTTRYS().get(sayWord);
-            if (textTryByTextTryId == null ){
-                textTryByTextTryId = textTry.setup();
-                TextTryConstant.getTEXTTRYS().put(textTryId,textTryByTextTryId);
-            }if (textTryByTextTryId.isRead()){
-
-            }if (textTryByTextTryId.isWriter()){
-
+            ConcurrentHashMap<String, TextTry> cmp = TextTryConstant.getTEXTTRYS();
+            for (String key : cmp.keySet()) {
+                TextTry value = cmp.get(key);
+                log.info("Key = " + key + ", Value = " + value.toString());
             }
-            FutureTask<String> futureTask = new FutureTask<String>(new TextTryTask(textTryByTextTryId,sayWord));
+
+
+            TextTry ty = cmp.get(textTryId);
+            log.info("[ty]——>" + ty);
+            if (ty == null){
+                ty = textTry.setup();
+                log.info("[ty]——>" + ty.toString());
+                log.info("[ty]——>" + sayWord + "[textTryId]——>" + textTryId);
+                cmp.put(textTryId,ty);
+            }else if ( !ty.isAlive()){
+                log.info("[ty.isAlive()]——>"+ ty.isAlive());
+                ty = textTry.setup();
+            }
+            FutureTask<String> futureTask = new FutureTask<String>(new TextTryTask(ty,sayWord));
             textTryThreadConfig.getTrialThreadExecutor().execute(futureTask);
             String response = futureTask.get();
-            log.info("[response]——>" + response);
             return response;
         }catch (Exception e){
             throw e;

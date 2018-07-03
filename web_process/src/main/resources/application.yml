@@ -1,13 +1,11 @@
-#serverÅäÖÃ
 server:
-  #Éè¶¨¼àÌı¶Ë¿Ú
-  port: 8080
+  port: 8888
   servlet:
     path: /
 
 
 bin:
-  path: /app/
+  path: /root/app/
   name: inter.sh
 
 spring:

@@ -28,24 +28,22 @@ public class TextTryTask implements Callable<String> {
     @Override
     public String call() throws Exception {
         String response = "";
-        BufferedWriter bufferedWriter = textTry.getBufferedWriter();
-            BufferedReader br = textTry.getBufferedReader();
+        BufferedWriter bw = textTry.getBufferedWriter();
+        BufferedReader br = textTry.getBufferedReader();
         try {
-            log.info("saying...");
-            bufferedWriter.write(sayWord + "\n");
-            bufferedWriter.flush();
-            bufferedWriter.close();
-            log.info("answer...");
-
-            String str = null;
-            while((str = br.readLine()) != null){
-                str = br.readLine();
-                response =response + str;
-            }
-            log.info("end**************************");
-        return response;
+            log.info("[request]——>[" + sayWord+ "]");
+            bw.write(sayWord + "\n");
+            bw.flush();
+            /*String str = null;
+                log.info("[br.ready()]——>[" + br.ready()+ "]");
+                log.info("[str = br.readLine()]——>[" + ((str = br.readLine())!= null)+ "]");
+            while (br.ready() && (str = br.readLine())!= null ){*/
+             response += br.readLine();
+            //}
+            log.info("[response]——>[" + response+ "]");
         }catch (Exception e){
             throw e;
         }
+        return response;
     }
 }
