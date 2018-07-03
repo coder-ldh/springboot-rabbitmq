@@ -1,4 +1,4 @@
-package com.ldh.trialutil;
+package com.ldh.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,17 +18,22 @@ public class TextTryThreadConfig {
 
     private static final Logger log = LoggerFactory.getLogger(TextTryThreadConfig.class);
 
+    private Executor executor;
+
     public Executor getTrialThreadExecutor() {
-        ThreadPoolTaskExecutor threadPool = new ThreadPoolTaskExecutor();
-        threadPool.setCorePoolSize(5);//当前线程数
-        threadPool.setMaxPoolSize(50);// 最大线程数
-        threadPool.setQueueCapacity(20);//线程池所使用的缓冲队列
-        threadPool.setWaitForTasksToCompleteOnShutdown(true);//等待任务在关机时完成--表明等待所有线程执行完
-        threadPool.setAwaitTerminationSeconds(60 * 15);// 等待时间 （默认为0，此时立即停止），并没等待xx秒后强制停止
-        threadPool.setThreadNamePrefix("MyAsync-");//  线程名称前缀
-        threadPool.initialize(); // 初始化
-        log.info("--------------------------》》》开启异常线程池");
-        return threadPool;
+        if (executor == null){
+            ThreadPoolTaskExecutor threadPool = new ThreadPoolTaskExecutor();
+            threadPool.setCorePoolSize(5);//当前线程数
+            threadPool.setMaxPoolSize(50);// 最大线程数
+            threadPool.setQueueCapacity(20);//线程池所使用的缓冲队列
+            threadPool.setWaitForTasksToCompleteOnShutdown(true);//等待任务在关机时完成--表明等待所有线程执行完
+            threadPool.setAwaitTerminationSeconds(60 * 15);// 等待时间 （默认为0，此时立即停止），并没等待xx秒后强制停止
+            threadPool.setThreadNamePrefix("MyAsync-");//  线程名称前缀
+            threadPool.initialize(); // 初始化
+            log.info("[TextTryThreadConfig——>][线程池已开启]");
+            this.executor = threadPool;
+        }
+        return executor;
     }
 
     @Bean
@@ -43,7 +48,7 @@ public class TextTryThreadConfig {
         //手动处理捕获的异常
         @Override
         public void handleUncaughtException(Throwable throwable, Method method, Object... obj) {
-            System.out.println("-------------》》》捕获线程异常信息");
+            log.info("[MyAsyncExceptionHandler——>][捕获线程池异常信息]");
             log.info("Exception message - " + throwable.getMessage());
             log.info("Method name - " + method.getName());
             for (Object param : obj) {

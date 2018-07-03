@@ -1,7 +1,7 @@
 package com.ldh.service;
 
 import com.ldh.entity.TextTry;
-import com.ldh.trialutil.TextTryThreadConfig;
+import com.ldh.config.TextTryThreadConfig;
 import com.ldh.util.TextTryTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

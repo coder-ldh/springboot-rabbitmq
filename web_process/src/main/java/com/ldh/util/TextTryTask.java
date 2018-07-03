@@ -34,23 +34,12 @@ public class TextTryTask implements Callable<String> {
             log.info("saying...");
             bufferedWriter.write(sayWord + "\n");
             bufferedWriter.flush();
+           bufferedWriter.close();
             log.info("answer...");
-
-            int count=0;
-            String str = br.readLine();
-            while(str != null  && count <= 7){
-                if (str.length() == 0){
-                    count ++;
-                }else {
-                    count=0;
-                }
-                str = br.readLine();
-                log.info(str);
-                response +=str;
+            String str;
+            while((str = br.readLine()) != null){
+                response = response + br.readLine();
             }
-/*            while((str = br.readLine()) != null){
-            }*/
-//            response = br.readLine();
             log.info("end**************************");
         }catch (Exception e){
             throw e;
