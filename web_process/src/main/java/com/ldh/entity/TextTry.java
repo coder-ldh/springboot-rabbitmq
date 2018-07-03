@@ -26,8 +26,8 @@ public class TextTry {
 
     public TextTry setup() throws Exception{
 
-        //String[] cmd = { "cmd"};
-        String[] cmd = { "/bin/sh", "-c",  this.SHELLPATH +  this.BINNAME};
+        String[] cmd = { "cmd"};
+        //String[] cmd = { "/bin/sh", "-c",  this.SHELLPATH +  this.BINNAME};
         log.info("[cmd]——>" + "/bin/sh"+ " " + "-c"+ " " +  SHELLPATH + BINNAME);
         Process pid;
         BufferedReader  bufferedReader =null;

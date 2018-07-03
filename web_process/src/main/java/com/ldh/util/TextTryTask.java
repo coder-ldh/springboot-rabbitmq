@@ -1,11 +1,13 @@
 package com.ldh.util;
 
 import com.ldh.entity.TextTry;
+import org.apache.tomcat.jni.Buffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.InputStream;
 import java.util.concurrent.Callable;
 
 /**
@@ -28,19 +30,16 @@ public class TextTryTask implements Callable<String> {
     @Override
     public String call() throws Exception {
         String response = "";
-        BufferedWriter bw = textTry.getBufferedWriter();
+       BufferedWriter bw = textTry.getBufferedWriter();
         BufferedReader br = textTry.getBufferedReader();
         try {
-            bw.write(sayWord + "\n");
+            bw.write(sayWord +"\n");
             log.info("[request]——>[" + sayWord + "\n"+ "]");
             bw.flush();
-//            String str = null;
-//            int b;
-//            while (br.ready()  && (b=br.read())!=-1){
-//                log.info("[br.ready()]——>[" + br.ready()+ "]");
-//                log.info("[str = br.readLine()]——>[" + ((str = br.readLine())!= null)+ "]");
-             response += br.readLine();
-//            }
+            int b = 0;
+            while ((b=br.read()) != -1 && br.ready()){
+                response += (char)b;
+            }
             log.info("[response]——>[" + response+ "]");
         }catch (Exception e){
             throw e;
