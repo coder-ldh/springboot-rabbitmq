@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ldh.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.ldh.model.User" >
+    <id column="user_id" property="userId"  />
+    <result column="real_name" property="realName" />
+    <result column="birthday" property="birthday"  />
+    <result column="balance" property="balance"  />
+    <result column="email" property="email" />
+    <result column="phone" property="phone" />
+    <result column="nick_name" property="nickName" />
+  </resultMap>
+  <sql id="Base_Column" >
+    user_id, phone ,real_name, birthday, balance, email, nick_name
+  </sql>
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column" />
+    from user
+    where user_id = #{userId}
+  </select>
+  <select id="selectByPhone" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column" />
+    from user
+    where phone = #{phone}
+  </select>
+  <delete id="deleteByKey" parameterType="java.lang.Integer" >
+    delete from user
+    where user_id = #{userId}
+  </delete>
+  <insert id="insert" parameterType="com.ldh.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId},
+      </if>
+      <if test="phone != null" >
+        #{phone},
+      </if>
+      <if test="realName != null" >
+        #{realName},
+      </if>
+      <if test="birthday != null" >
+        #{birthday},
+      </if>
+      <if test="balance != null" >
+        #{balance},
+      </if>
+      <if test="email != null" >
+        #{email},
+      </if>
+      <if test="nickName != null" >
+        #{nickName},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByKey" parameterType="com.ldh.model.User" >
+    update user
+    <set >
+      <if test="phone != null" >
+        phone = #{phone},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance},
+      </if>
+      <if test="email != null" >
+        email = #{email},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName},
+      </if>
+    </set>
+    where user_id = #{userId}
+  </update>
+</mapper>
