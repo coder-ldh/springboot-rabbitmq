@@ -65,10 +65,10 @@ public class Consumer{
 				}
 			}
 			int intValue = msg.getBalance().intValue();
-			if(intValue == 5){
+/*			if(intValue == 5){
 				int a = 5/0 ;
 				System.out.println(a);
-			}
+			}*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			/**

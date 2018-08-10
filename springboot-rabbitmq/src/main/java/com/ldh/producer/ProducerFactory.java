@@ -9,6 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ldh.model.Message;
+
+/**
+ * 生产者工厂
+ */
 @Component
 public class ProducerFactory implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnCallback{
 
