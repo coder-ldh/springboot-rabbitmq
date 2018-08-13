@@ -25,22 +25,25 @@ public class ProducerFactory implements RabbitTemplate.ConfirmCallback,RabbitTem
 		/**
 		 * 设置确认机制
 		 */
-		if(msg.getConfirm() != null && msg.getConfirm())
+		if(msg.getConfirm() != null && msg.getConfirm()){
 			rabbitTemplate.setConfirmCallback(this);
-		
+		}
+
 		/**
 		 * 若routingKey无法找到一个合适的queue存储消息,broker则调用returnedMessage()
 		 */
-		if(msg.getMandatory() != null && msg.getMandatory())
+		if(msg.getMandatory() != null && msg.getMandatory()){
 			rabbitTemplate.setMandatory(true);
 			rabbitTemplate.setReturnCallback(this);
-		
+		}
+
 		/**
 		 * 设置开启事务
 		 */
-		if(msg.getTransacted() != null && msg.getTransacted())
+		if(msg.getTransacted() != null && msg.getTransacted()){
 			rabbitTemplate.setChannelTransacted(true);
-		
+		}
+
 		String jsonString = JSONObject.toJSONString(msg.getMsg());
 		rabbitTemplate.convertAndSend(msg.getExchange(), msg.getRoutingKey(),jsonString.getBytes());
 	}

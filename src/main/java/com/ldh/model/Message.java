@@ -1,13 +1,18 @@
 package com.ldh.model;
 
 import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@Data
+@NoArgsConstructor
 public class Message implements Serializable{
 
 	/**
 	 */
 	private static final long serialVersionUID = 7045666728699679283L;
-	
 	/**
 	 * 路由键
 	 */
@@ -39,60 +44,4 @@ public class Message implements Serializable{
 	 * 消息
 	 */
 	private Object msg;
-
-	public String getRoutingKey() {
-		return routingKey;
-	}
-
-	public void setRoutingKey(String routingKey) {
-		this.routingKey = routingKey;
-	}
-
-	public String getExchange() {
-		return exchange;
-	}
-
-	public void setExchange(String exchange) {
-		this.exchange = exchange;
-	}
-
-	public String getQueue() {
-		return queue;
-	}
-
-	public void setQueue(String queue) {
-		this.queue = queue;
-	}
-
-	public Boolean getMandatory() {
-		return mandatory;
-	}
-
-	public void setMandatory(Boolean mandatory) {
-		this.mandatory = mandatory;
-	}
-
-	public Boolean getConfirm() {
-		return confirm;
-	}
-
-	public void setConfirm(Boolean confirm) {
-		this.confirm = confirm;
-	}
-
-	public Boolean getTransacted() {
-		return transacted;
-	}
-
-	public void setTransacted(Boolean transacted) {
-		this.transacted = transacted;
-	}
-
-	public Object getMsg() {
-		return msg;
-	}
-
-	public void setMsg(Object msg) {
-		this.msg = msg;
-	}
 }
